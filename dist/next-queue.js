@@ -2,15 +2,16 @@
 
   var global = global || this || self || window;
   var nx = global.nx || require('next-js-core2');
+  var _ = nx.remove || require('next-remove');
 
   var NxQueue = nx.declare('nx.Queue', {
     methods: {
       init: function (inArray) {
         this._result = [];
         this._callbacks = inArray || [];
-        this.queue();
+        this.make();
       },
-      queue: function(){
+      make: function(){
         var next, self  = this;
         nx.each( this._callbacks, function(i, callback){
           self._callbacks[ i ] = function(){
@@ -19,7 +20,7 @@
           };
         },this);
       },
-      run: function () {
+      start: function () {
         this._callbacks[0]();
         return this;
       }

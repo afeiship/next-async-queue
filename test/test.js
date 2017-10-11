@@ -27,6 +27,6 @@ describe('next/Queue', function () {
 
 
   var nxQueue = new nx.Queue( [fn1, fn2, fn3] );
-  nxQueue.run();
+  nxQueue.start();
 
 });

@@ -8,6 +8,7 @@
 </head>
 <body>
   <script src="../node_modules/next-js-core2/dist/next-js-core2.js"></script>
+  <script src="../node_modules/next-remove/dist/next-remove.js"></script>
   <script src="../src/next-queue.js"></script>
   <script>
 
@@ -22,19 +23,21 @@
       setTimeout(function(){
         console.log(456,'2s');
         next();
-      },2000);
+      },1000);
     };
 
     var fn3 = function(next){
       setTimeout(function(){
         console.log(789,'3s');
         next();
-      },3000);
+      },1000);
     };
 
 
     var nxQueue = new nx.Queue( [fn1, fn2, fn3] );
-    nxQueue.run();
+    nxQueue.start();
+
+    //nxQueue.dequeue( fn1 );
 
   </script>
 </body>
