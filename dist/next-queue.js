@@ -30,8 +30,8 @@
         var iterations = this._iterations = Array( length );
         var result = [];
         var done = function(data){
-          result.push( data );
-          self._thenCallback({ status: STATUS.LOAD, data: result });
+          data && result.push(data);
+          self._thenCallback({ status: STATUS.DONE, data: result });
         };
 
         nx.each( this._callbacks, function(i, callback){
@@ -39,7 +39,7 @@
             next = iterations[ i + 1 ] || done;
             callback.call(self, next);
             data && result.push(data);
-            self._thenCallback({ status: STATUS.DONE, data: result });
+            self._thenCallback({ status: STATUS.LOAD, data: result });
           };
         });
         return this;
