@@ -2,7 +2,20 @@
 > Async queue for next.
 
 
-## resources:
+## usage:
+```js
+import NxQueue from 'next-queue';
 
-## todos:
-- [ ] unit test case
+// new:
+const nxQueue = nex NxQueue([fn1,fn2]);
+
+// queue:
+nxQueue.queue(fn3);
+
+// dequeu:
+nxQueue.dequeue( fn1 );
+
+//start:
+nxQueue.start();
+
+```
