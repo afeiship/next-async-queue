@@ -13,6 +13,7 @@
       init: function (inArray) {
         this._callbacks = inArray || [];
         this._thenCallback = nx.noop;
+        this._thenErrorCallback = nx.noop;
         return this.make();
       },
       queue: function(inCallback){
@@ -43,8 +44,9 @@
         });
         return this;
       },
-      then: function(inCallback){
+      then: function(inCallback,inErrorCallback){
         this._thenCallback = inCallback;
+        this._thenErrorCallback = inErrorCallback;
         return this;
       },
       start: function () {
