@@ -1,42 +1,42 @@
-(function () {
-
-  var global = global || this || self || window;
+(function() {
+  var global = global || this || window || Function('return this')();
   var nx = global.nx || require('next-js-core2');
   var _ = nx.remove || require('next-remove');
   var STATUS = {
-    LOAD:'load',
-    DONE:'done'
+    LOAD: 'load',
+    DONE: 'done'
   };
 
   var NxQueue = nx.declare('nx.Queue', {
     methods: {
-      init: function (inArray) {
+      init: function(inArray) {
         this._callbacks = inArray || [];
         this._thenCallback = nx.noop;
         this._thenErrorCallback = nx.noop;
         return this.make();
       },
-      queue: function(inCallback){
-        this._callbacks.push( inCallback );
+      queue: function(inCallback) {
+        this._callbacks.push(inCallback);
         return this.make();
       },
-      dequeue: function(inCallback){
-        nx.remove( this._callbacks, [ inCallback ]);
+      dequeue: function(inCallback) {
+        nx.remove(this._callbacks, [inCallback]);
         return this.make();
       },
-      make: function(){
-        var next, self = this;
+      make: function() {
+        var next,
+          self = this;
         var length = this._callbacks.length;
-        var iterations = this._iterations = Array( length );
+        var iterations = (this._iterations = Array(length));
         var result = [];
-        var done = function(data){
+        var done = function(data) {
           data && result.push(data);
           self._thenCallback({ status: STATUS.DONE, data: result });
         };
 
-        nx.each( this._callbacks, function(i, callback){
-          iterations[ i ] = function(data){
-            next = iterations[ i + 1 ] || done;
+        nx.each(this._callbacks, function(i, callback) {
+          iterations[i] = function(data) {
+            next = iterations[i + 1] || done;
             callback.call(self, next);
             data && result.push(data);
             self._thenCallback({ status: STATUS.LOAD, data: result });
@@ -44,12 +44,12 @@
         });
         return this;
       },
-      then: function(inCallback,inErrorCallback){
+      then: function(inCallback, inErrorCallback) {
         this._thenCallback = inCallback;
         this._thenErrorCallback = inErrorCallback;
         return this;
       },
-      start: function () {
+      start: function() {
         this._iterations[0]();
         return this;
       }
@@ -59,5 +59,4 @@
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = NxQueue;
   }
-
-}());
+})();
