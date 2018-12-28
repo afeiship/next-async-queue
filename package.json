@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "gulp",
-    "test": "jest"
+    "test": "node test/test.js"
   },
   "main": "dist/next-queue.js",
   "license": "MIT",
