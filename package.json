@@ -1,6 +1,6 @@
 {
   "name": "next-queue",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Async queue for next.",
   "homepage": "https://github.com/afeiship/next-queue",
   "author": {
