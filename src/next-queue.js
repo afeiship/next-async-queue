@@ -1,7 +1,6 @@
 (function() {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('next-js-core2');
-  var _ = nx.remove || require('next-remove');
   var STATUS = {
     LOAD: 'load',
     DONE: 'done'
@@ -20,7 +19,8 @@
         return this.make();
       },
       dequeue: function(inCallback) {
-        nx.remove(this._callbacks, [inCallback]);
+        var index = this._callbacks.indexOf(inCallback);
+        this._callbacks.splice(index >>> 0, 1);
         return this.make();
       },
       make: function() {
