@@ -1,6 +1,16 @@
+/*!
+ * name: @feizheng/next-queue
+ * description: Async queue for next.
+ * url: https://github.com/afeiship/next-queue
+ * version: 1.0.0
+ * date: 2019-12-26 13:49:07
+ * license: MIT
+ */
+
 (function() {
   var global = global || this || window || Function('return this')();
-  var nx = global.nx || require('next-js-core2');
+  var nx = global.nx || require('@feizheng/next-js-core2');
+
   var STATUS = {
     LOAD: 'load',
     DONE: 'done'
@@ -60,3 +70,5 @@
     module.exports = NxQueue;
   }
 })();
+
+//# sourceMappingURL=next-queue.js.map
