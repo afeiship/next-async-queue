@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://afeiship.github.io/next-queue/">
-    <img width="880" src="https://tva1.sinaimg.cn/large/006tNbRwgy1gaa2vgp2qcj30ps07ijsg.jpg">
+    <img width="880" src="https://tva1.sinaimg.cn/large/006tNbRwgy1gaa2xerbv3j30w40hugon.jpg">
   </a>
 </p>
 
