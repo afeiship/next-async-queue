@@ -22,7 +22,11 @@ var fn3 = function(next) {
   }, 1000);
 };
 
-var nxQueue = new nx.Queue([fn1, fn2, fn3]);
-nxQueue.start().then((resp) => {
-  console.log(resp);
+// var nxQueue = new nx.Queue([fn1, fn2, fn3]);
+// nxQueue.start().then((resp) => {
+//   console.log(resp);
+// });
+
+var queue = nx.Queue.run(fn1, fn2, fn3).then((res) => {
+  console.log(res);
 });

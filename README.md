@@ -14,8 +14,8 @@ npm install -S @feizheng/next-queue
 
 ## apis
 | api | params | description   |
-|-----|--------|---------------|
-| get | -      | desc balabala |
+| --- | ------ | ------------- |
+| run | -      | desc balabala |
 
 ## usage
 ```js
@@ -42,9 +42,13 @@ var fn3 = function(next){
   },1000);
 };
 
-
-var nxQueue = new nx.Queue( [fn1, fn2, fn3] );
-nxQueue.start().then(resp=>{
-  console.log(resp);
+NxQueue.run(fn1, fn2, fn3).then((res) => {
+  console.log(res);
 });
+
+// results:
+// 123 1s
+// 456 2s
+// 789 3s
+// [ { result: 1 }, { result: 2 }, { result: 3 } ]
 ```

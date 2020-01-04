@@ -2,12 +2,20 @@
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
 
-  var STATUS = {
-    LOAD: 'load',
-    DONE: 'done'
-  };
-
   var NxQueue = nx.declare('nx.Queue', {
+    statics: {
+      run: function() {
+        var args = nx.slice(arguments);
+        var queue = new nx.Queue(args);
+        return new Promise(function(resolve, reject) {
+          queue.start().then(function(res) {
+            if (res.status === 'done') {
+              resolve(res.data);
+            }
+          }, reject);
+        });
+      }
+    },
     methods: {
       init: function(inArray) {
         this._callbacks = inArray || [];
@@ -32,7 +40,7 @@
         var result = [];
         var done = function(data) {
           data && result.push(data);
-          self._thenCallback({ status: STATUS.DONE, data: result });
+          self._thenCallback({ status: 'done', data: result });
         };
 
         nx.each(this._callbacks, function(i, callback) {
@@ -40,7 +48,7 @@
             next = iterations[i + 1] || done;
             callback.call(self, next);
             data && result.push(data);
-            self._thenCallback({ status: STATUS.LOAD, data: result });
+            self._thenCallback({ status: 'load', data: result });
           };
         });
         return this;
