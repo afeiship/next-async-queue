@@ -40,7 +40,7 @@
         nx.each(this._callbacks, function(i, callback) {
           iterations[i] = function(data) {
             next = iterations[i + 1] || done;
-            callback.call(self, next);
+            callback.call(self, next, data);
             data && result.push(data);
             self._thenCallback({ status: 'load', data: result });
           };

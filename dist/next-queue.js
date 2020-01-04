@@ -2,8 +2,8 @@
  * name: @feizheng/next-queue
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
- * version: 1.1.0
- * date: 2020-01-04 21:39:18
+ * version: 1.1.1
+ * date: 2020-01-04 21:57:56
  * license: MIT
  */
 
@@ -49,7 +49,7 @@
         nx.each(this._callbacks, function(i, callback) {
           iterations[i] = function(data) {
             next = iterations[i + 1] || done;
-            callback.call(self, next);
+            callback.call(self, next, data);
             data && result.push(data);
             self._thenCallback({ status: 'load', data: result });
           };
