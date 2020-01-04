@@ -2,20 +2,36 @@
  * name: @feizheng/next-queue
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
- * version: 1.2.1
- * date: 2020-01-04 22:19:34
+ * version: 1.3.0
+ * date: 2020-01-04 22:31:11
  * license: MIT
  */
 
 (function() {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
+  var STATUS = {
+    load: 1,
+    done: 0
+  };
 
   var NxQueue = nx.declare('nx.Queue', {
     statics: {
+      STATUS: STATUS,
       run: function(inArray, inArgs) {
         var queue = new nx.Queue(inArray, inArgs);
-        return queue.start();
+        return new Promise(function(resolve, reject) {
+          queue.start().then(
+            function(res) {
+              if (res.status === STATUS.done) {
+                resolve(res.data);
+              }
+            },
+            function(err) {
+              reject(err);
+            }
+          );
+        });
       }
     },
     methods: {
@@ -43,7 +59,7 @@
         var result = [];
         var done = function(data) {
           data && result.push(data);
-          self._thenCallback({ status: 'done', data: result });
+          self._thenCallback({ status: STATUS.done, data: result });
         };
 
         nx.each(this._callbacks, function(i, callback) {
@@ -51,7 +67,7 @@
             next = iterations[i + 1] || done;
             callback.call(self, next, data || self._initial);
             data && result.push(data);
-            self._thenCallback({ status: 'load', data: result });
+            self._thenCallback({ status: STATUS.load, data: result });
           };
         });
         return this;
