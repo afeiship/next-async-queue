@@ -3,7 +3,7 @@
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
  * version: 1.1.0
- * date: 2020-01-04 19:33:06
+ * date: 2020-01-04 21:39:18
  * license: MIT
  */
 
@@ -16,13 +16,7 @@
       run: function() {
         var args = nx.slice(arguments);
         var queue = new nx.Queue(args);
-        return new Promise(function(resolve, reject) {
-          queue.start().then(function(res) {
-            if (res.status === 'done') {
-              resolve(res.data);
-            }
-          }, reject);
-        });
+        return queue.start();
       }
     },
     methods: {

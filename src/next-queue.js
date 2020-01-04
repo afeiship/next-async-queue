@@ -7,13 +7,7 @@
       run: function() {
         var args = nx.slice(arguments);
         var queue = new nx.Queue(args);
-        return new Promise(function(resolve, reject) {
-          queue.start().then(function(res) {
-            if (res.status === 'done') {
-              resolve(res.data);
-            }
-          }, reject);
-        });
+        return queue.start();
       }
     },
     methods: {
