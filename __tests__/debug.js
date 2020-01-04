@@ -27,6 +27,6 @@ var fn3 = function(next, data) {
 //   console.log(resp);
 // });
 
-var queue = nx.Queue.run(fn1, fn2, fn3).then((res) => {
+NxQueue.run([fn1, fn2, fn3], 'aaa').then((res) => {
   console.log(res);
 });
