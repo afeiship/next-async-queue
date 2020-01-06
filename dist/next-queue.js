@@ -3,7 +3,7 @@
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
  * version: 1.3.0
- * date: 2020-01-04 22:31:11
+ * date: 2020-01-06 14:39:24
  * license: MIT
  */
 
@@ -65,7 +65,7 @@
         nx.each(this._callbacks, function(i, callback) {
           iterations[i] = function(data) {
             next = iterations[i + 1] || done;
-            callback.call(self, next, data || self._initial);
+            callback.call(self, next, data, self._initial);
             data && result.push(data);
             self._thenCallback({ status: STATUS.load, data: result });
           };
@@ -77,7 +77,7 @@
         this._thenErrorCallback = inErrorCallback;
         return this;
       },
-      start: function(inArgs) {
+      start: function() {
         this._iterations[0]();
         return this;
       }
