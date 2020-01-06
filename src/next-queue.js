@@ -1,10 +1,8 @@
 (function() {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
-  var STATUS = {
-    load: 1,
-    done: 0
-  };
+  var nxRepeatBy = nx.repeatBy || require('@feizheng/next-repeat-by');
+  var STATUS = { load: 1, done: 0 };
 
   var NxQueue = nx.declare('nx.Queue', {
     statics: {
@@ -22,6 +20,15 @@
               reject(err);
             }
           );
+        });
+      },
+      repeat: function(inPromisify, inCount) {
+        return nxRepeatBy(inPromisify, inCount, function(item) {
+          return function(done) {
+            return item().then(function(res) {
+              done(res);
+            });
+          };
         });
       }
     },
