@@ -3,7 +3,7 @@
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
  * version: 1.4.0
- * date: 2020-01-06 21:44:23
+ * date: 2020-01-06 21:48:38
  * license: MIT
  */
 
@@ -11,7 +11,9 @@
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
   var nxRepeatBy = nx.repeatBy || require('@feizheng/next-repeat-by');
+
   var STATUS = { load: 1, done: 0 };
+  var MSG_TIPS_PROMISIFY = 'Promisify must be wrapped to a function.';
 
   var NxQueue = nx.declare('nx.Queue', {
     statics: {
@@ -32,10 +34,15 @@
         });
       },
       repeat: function(inPromisify, inCount) {
+        if (typeof inPromisify.then === 'function') {
+          nx.error(MSG_TIPS_PROMISIFY);
+          return [];
+        }
+
         return nxRepeatBy(inPromisify, inCount, function(item) {
-          return function(done) {
+          return function(next) {
             return item().then(function(res) {
-              done(res);
+              next(res);
             });
           };
         });

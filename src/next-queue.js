@@ -2,7 +2,9 @@
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
   var nxRepeatBy = nx.repeatBy || require('@feizheng/next-repeat-by');
+
   var STATUS = { load: 1, done: 0 };
+  var MSG_TIPS_PROMISIFY = 'Promisify must be wrapped to a function.';
 
   var NxQueue = nx.declare('nx.Queue', {
     statics: {
@@ -23,10 +25,15 @@
         });
       },
       repeat: function(inPromisify, inCount) {
+        if (typeof inPromisify.then === 'function') {
+          nx.error(MSG_TIPS_PROMISIFY);
+          return [];
+        }
+
         return nxRepeatBy(inPromisify, inCount, function(item) {
-          return function(done) {
+          return function(next) {
             return item().then(function(res) {
-              done(res);
+              next(res);
             });
           };
         });
