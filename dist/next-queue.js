@@ -2,8 +2,8 @@
  * name: @feizheng/next-queue
  * description: Async queue for next.
  * url: https://github.com/afeiship/next-queue
- * version: 1.4.0
- * date: 2020-01-07 10:13:06
+ * version: 1.5.0
+ * date: 2020-01-07 10:17:13
  * license: MIT
  */
 
