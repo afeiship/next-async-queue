@@ -13,9 +13,17 @@ npm install -S @feizheng/next-queue
 ```
 
 ## apis
-| api | params | description   |
-| --- | ------ | ------------- |
-| run | -      | desc balabala |
+| api    | params    | description                           |
+| ------ | --------- | ------------------------------------- |
+| run    | items     | Run a list of async functions         |
+| repeat | fn, count | Get a repeat functions                |
+| wrap   | [fn,fn]   | Wrap an list of functions to runnable |
+
+## status
+| status | name | code | description                   |
+| ------ | ---- | ---- | ----------------------------- |
+| LOAD   | load | 1    | Status when task is running   |
+| DONE   | done | 0    | Status when all task has done |
 
 ## usage
 ```js
