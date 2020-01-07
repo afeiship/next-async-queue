@@ -57,7 +57,7 @@
       });
     });
 
-    test.only('api:wrap should work fine', (done) => {
+    test('api:wrap should work fine', (done) => {
       var items = NxQueue.wrap([
         () => {
           return new Promise((resolve) => {

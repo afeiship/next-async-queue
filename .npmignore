@@ -14,3 +14,4 @@ Gemfile
 jest.config.js
 LICENSE.txt
 Rakefile
+.vscode
