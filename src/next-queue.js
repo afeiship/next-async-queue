@@ -5,6 +5,7 @@
 
   var STATUS = { load: 1, done: 0 };
   var MSG_TIPS_PROMISIFY = 'Promisify must be wrapped to a function.';
+  var FUNC = 'function';
 
   var NxQueue = nx.declare('nx.Queue', {
     statics: {
@@ -24,19 +25,31 @@
           );
         });
       },
-      repeat: function(inPromisify, inCount) {
-        if (typeof inPromisify.then === 'function') {
-          nx.error(MSG_TIPS_PROMISIFY);
-          return [];
-        }
+      wrap: function(inArray) {
+        var result = [];
+        for (var i = 0; i < inArray.length; i++) {
+          var fn = inArray[i];
+          if (typeof fn.then === FUNC) {
+            nx.error(MSG_TIPS_PROMISIFY);
+            break;
+          }
 
-        return nxRepeatBy(inPromisify, inCount, function(item) {
-          return function(next) {
-            return item().then(function(res) {
-              next(res);
-            });
-          };
-        });
+          /* prettier-ignore */
+          result.push(
+            (function (index) {
+              return function(next, data, initial) {
+                return inArray[index]().then(function(res) {
+                  next(res, data, initial);
+                });
+              }
+            }(i))
+          );
+        }
+        return result;
+      },
+      repeat: function(inPromisify, inCount) {
+        var items = nxRepeatBy(inPromisify, inCount);
+        return this.wrap(items);
       }
     },
     methods: {
