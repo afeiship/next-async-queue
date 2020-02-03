@@ -1,6 +1,6 @@
 (function() {
   var nx = require('@feizheng/next-js-core2');
-  var NxQueue = require('../src/next-queue');
+  var NxAsyncQueue = require('../src/next-async-queue');
 
   describe('NxQueue.methods', function() {
     test('api:new/start should work fine:', function(done) {
@@ -27,10 +27,10 @@
       };
 
       var items = [fn1, fn2, fn3];
-      var nxQueue = new NxQueue(items);
+      var nxQueue = new NxAsyncQueue(items);
       nxQueue.start().then((res) => {
         counter++;
-        if (res.status === NxQueue.STATUS.done) {
+        if (res.status === NxAsyncQueue.STATUS.done) {
           expect(counter === items.length).toBe(true);
           done();
         }
@@ -39,7 +39,7 @@
 
     test('api:repeat should work fine', (done) => {
       var counter = 0;
-      var items = NxQueue.repeat(() => {
+      var items = NxAsyncQueue.repeat(() => {
         return new Promise((resolve) => {
           console.log('start!');
           setTimeout(() => {
@@ -50,7 +50,7 @@
         });
       }, 3);
 
-      NxQueue.run(items).then((res) => {
+      NxAsyncQueue.run(items).then((res) => {
         expect(counter).toBe(3);
         expect(res).toEqual([1, 1, 1]);
         done();
@@ -58,7 +58,7 @@
     });
 
     test('api:wrap should work fine', (done) => {
-      var items = NxQueue.wrap([
+      var items = NxAsyncQueue.wrap([
         () => {
           return new Promise((resolve) => {
             console.log('task 1');
@@ -79,7 +79,7 @@
         }
       ]);
 
-      NxQueue.run(items).then((res) => {
+      NxAsyncQueue.run(items).then((res) => {
         expect(res).toEqual([1, 2]);
         done();
       });

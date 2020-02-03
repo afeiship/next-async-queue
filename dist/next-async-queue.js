@@ -1,3 +1,12 @@
+/*!
+ * name: @feizheng/next-async-queue
+ * description: Async queue for next.
+ * url: https://github.com/afeiship/next-async-queue
+ * version: 1.0.0
+ * date: 2020-02-03 20:14:51
+ * license: MIT
+ */
+
 (function() {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
@@ -7,11 +16,11 @@
   var MSG_TIPS_PROMISIFY = 'Promisify must be wrapped to a function.';
   var FUNC = 'function';
 
-  var NxQueue = nx.declare('nx.Queue', {
+  var NxAsyncQueue = nx.declare('nx.AsyncQueue', {
     statics: {
       STATUS: STATUS,
       run: function(inArray, inArgs) {
-        var queue = new nx.Queue(inArray, inArgs);
+        var queue = new NxAsyncQueue(inArray, inArgs);
         return new Promise(function(resolve, reject) {
           queue.start().then(
             function(res) {
@@ -103,6 +112,8 @@
   });
 
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = NxQueue;
+    module.exports = NxAsyncQueue;
   }
 })();
+
+//# sourceMappingURL=next-async-queue.js.map

@@ -1,8 +1,8 @@
 {
-  "name": "@feizheng/next-queue",
-  "version": "1.5.0",
+  "name": "@feizheng/next-async-queue",
+  "version": "1.0.0",
   "description": "Async queue for next.",
-  "homepage": "https://github.com/afeiship/next-queue",
+  "homepage": "https://github.com/afeiship/next-async-queue",
   "author": {
     "name": "afei",
     "email": "1290657123@qq.com"
@@ -11,7 +11,7 @@
     "build": "gulp",
     "test": "jest"
   },
-  "main": "dist/next-queue.js",
+  "main": "dist/next-async-queue.js",
   "license": "MIT",
   "devDependencies": {
     "@feizheng/gulp-pkg-header": "^1.0.1",

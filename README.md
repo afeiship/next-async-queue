@@ -1,15 +1,9 @@
-<p align="center">
-  <a href="https://afeiship.github.io/next-queue/">
-    <img width="880" src="https://tva1.sinaimg.cn/large/006tNbRwgy1gaa2xerbv3j30w40hugon.jpg">
-  </a>
-</p>
-
-# next-queue
+# next-async-queue
 > Async queue for next.
 
 ## installation
 ```bash
-npm install -S @feizheng/next-queue
+npm install -S @feizheng/next-async-queue
 ```
 
 ## apis
@@ -27,7 +21,7 @@ npm install -S @feizheng/next-queue
 
 ## usage
 ```js
-import NxQueue from '@feizheng/next-queue';
+import NxAsyncQueue from '@feizheng/next-async-queue';
 
 var fn1 = function(next){
   setTimeout(function(){
@@ -50,7 +44,7 @@ var fn3 = function(next){
   },1000);
 };
 
-NxQueue.run(fn1, fn2, fn3).then((res) => {
+NxAsyncQueue.run(fn1, fn2, fn3).then((res) => {
   console.log(res);
 });
 
