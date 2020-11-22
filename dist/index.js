@@ -3,7 +3,7 @@
  * description: Async queue for next.
  * homepage: https://github.com/afeiship/next-async-queue
  * version: 1.0.0
- * date: 2020-11-22 18:01:19
+ * date: 2020-11-22 18:05:29
  * license: MIT
  */
 
