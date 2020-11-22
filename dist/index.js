@@ -1,16 +1,16 @@
 /*!
- * name: @feizheng/next-async-queue
+ * name: @jswork/next-async-queue
  * description: Async queue for next.
- * url: https://github.com/afeiship/next-async-queue
+ * homepage: https://github.com/afeiship/next-async-queue
  * version: 1.0.0
- * date: 2020-02-03 20:14:51
+ * date: 2020-11-22 17:58:30
  * license: MIT
  */
 
-(function() {
+(function () {
   var global = global || this || window || Function('return this')();
-  var nx = global.nx || require('@feizheng/next-js-core2');
-  var nxRepeatBy = nx.repeatBy || require('@feizheng/next-repeat-by');
+  var nx = global.nx || require('@jswork/next');
+  var nxRepeatBy = nx.repeatBy || require('@jswork/next-repeat-by');
 
   var STATUS = { load: 1, done: 0 };
   var MSG_TIPS_PROMISIFY = 'Promisify must be wrapped to a function.';
@@ -19,22 +19,22 @@
   var NxAsyncQueue = nx.declare('nx.AsyncQueue', {
     statics: {
       STATUS: STATUS,
-      run: function(inArray, inArgs) {
+      run: function (inArray, inArgs) {
         var queue = new NxAsyncQueue(inArray, inArgs);
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
           queue.start().then(
-            function(res) {
+            function (res) {
               if (res.status === STATUS.done) {
                 resolve(res.data);
               }
             },
-            function(err) {
+            function (err) {
               reject(err);
             }
           );
         });
       },
-      wrap: function(inArray) {
+      wrap: function (inArray) {
         var result = [];
         for (var i = 0; i < inArray.length; i++) {
           var fn = inArray[i];
@@ -56,41 +56,41 @@
         }
         return result;
       },
-      repeat: function(inPromisify, inCount) {
+      repeat: function (inPromisify, inCount) {
         var items = nxRepeatBy(inPromisify, inCount);
         return this.wrap(items);
       }
     },
     methods: {
-      init: function(inArray, inArgs) {
+      init: function (inArray, inArgs) {
         this._callbacks = inArray || [];
         this._thenCallback = nx.noop;
         this._thenErrorCallback = nx.noop;
         this._initial = inArgs;
         return this.make();
       },
-      queue: function(inCallback) {
+      queue: function (inCallback) {
         this._callbacks.push(inCallback);
         return this.make();
       },
-      dequeue: function(inCallback) {
+      dequeue: function (inCallback) {
         var index = this._callbacks.indexOf(inCallback);
         this._callbacks.splice(index >>> 0, 1);
         return this.make();
       },
-      make: function() {
+      make: function () {
         var next,
           self = this;
         var length = this._callbacks.length;
         var iterations = (this._iterations = Array(length));
         var result = [];
-        var done = function(data) {
+        var done = function (data) {
           data && result.push(data);
           self._thenCallback({ status: STATUS.done, data: result });
         };
 
-        nx.each(this._callbacks, function(i, callback) {
-          iterations[i] = function(data) {
+        nx.each(this._callbacks, function (i, callback) {
+          iterations[i] = function (data) {
             next = iterations[i + 1] || done;
             callback.call(self, next, data, self._initial);
             data && result.push(data);
@@ -99,12 +99,12 @@
         });
         return this;
       },
-      then: function(inCallback, inErrorCallback) {
+      then: function (inCallback, inErrorCallback) {
         this._thenCallback = inCallback;
         this._thenErrorCallback = inErrorCallback;
         return this;
       },
-      start: function() {
+      start: function () {
         this._iterations[0]();
         return this;
       }
@@ -115,5 +115,3 @@
     module.exports = NxAsyncQueue;
   }
 })();
-
-//# sourceMappingURL=next-async-queue.js.map
